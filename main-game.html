@@ -128,6 +128,25 @@ body {
     </div>
 
     <script>
+         document.addEventListener("DOMContentLoaded", function () {
+            var audio = document.getElementById('audioPlayer');
+   
+            // Try to autoplay
+            var playPromise = audio.play();
+   
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    console.warn("Autoplay blocked. Trying workaround...");
+                    // Start muted, then unmute after a short delay
+                    audio.muted = true;
+                    audio.play().then(() => {
+                        setTimeout(() => {
+                            audio.muted = false;
+                        }, 500);
+                    });
+                });
+            }
+        });
        // Game logic and interactions
 
 let dialogueBox = document.getElementById('dialogue');
